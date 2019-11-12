@@ -24,5 +24,7 @@ enum ATResponse {AT_OK, AT_ERROR};
 
 int sendATCommandWrite(const char * cmd, const char * param);
 void XbeeEnterCommandMode();
+void XbeeExitCommandMode();
 void XbeeSetupSMSSend();
+void XbeeWait(int waitMs);
 #endif // AT_PARSE

@@ -61,9 +61,9 @@ int main(void)
 
   Block_Energy_Mode(SYSTEM_ENERGY_MODE);
 
- // XbeeSetupSMSSend();
+ XbeeSetupSMSSend();
   while (1) {
-	  XbeeEnterCommandMode();
+
 
 	  /* If we have no events to execute, go to sleep */
 		if(SchedulerEvent == 0)
