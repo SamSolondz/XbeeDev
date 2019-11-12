@@ -13,12 +13,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 #include "My_LEUART.h"
 #include "log.h"
+#include "letimer.h"
 
+extern volatile bool waitForResp;
 enum ATResponse {AT_OK, AT_ERROR};
 
 int sendATCommandWrite(const char * cmd, const char * param);
-void XbeeSMSConfigure();
+void XbeeEnterCommandMode();
+void XbeeSetupSMSSend();
 #endif // AT_PARSE

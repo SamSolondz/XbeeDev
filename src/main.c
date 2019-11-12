@@ -20,14 +20,18 @@
 #include "em_cmu.h"
 #include "em_emu.h"
 #include "em_leuart.h"
+#include "em_letimer.h"
 #include "em_ldma.h"
 #include "bspconfig.h"
 #include "retargetserial.h"
 #include "My_LEUART.h"
 #include "My_Sleep.h"
+#include "My_CMU.h"
 #include "Global_Defines.h"
 #include "ATCommandsLib.h"
+#include "letimer.h"
 #include "log.h"
+
 
 /***************************************************************************//**
  * @brief  Main function
@@ -37,6 +41,7 @@ volatile bool TXC_Flag = false;				//This global variable is used to set a flag 
 volatile uint8_t RX_Index = 0;				//Index used to keep track of what element we are adding a char into in our RX buffer
 volatile char RX_Buffer[RX_BUFF_SIZE];		//Buffer used to store RXed data from the BLE module
 
+volatile bool waitForResp = false;
 
 volatile uint8_t EnergyMode_Counter[5];		//Used to keep track of the energy modes being blocked
 volatile uint8_t SchedulerEvent = 0;		//Stores scheduler events to execute
@@ -45,16 +50,20 @@ int main(void)
 {
   /* Chip errata */
   CHIP_Init();
+  /* Initialize Clocks */
+  CMU_Init();
+
+  /*Initialize LETIMER*/
+  LETIMER0_Setup(15000); 	//1000 ms underflow period
 
   /* Initialize LEUART */
   LEUART0_Setup();
 
-
-
   Block_Energy_Mode(SYSTEM_ENERGY_MODE);
 
+ // XbeeSetupSMSSend();
   while (1) {
-    /* On every wakeup enter EM2 again */
+	  XbeeEnterCommandMode();
 
 	  /* If we have no events to execute, go to sleep */
 		if(SchedulerEvent == 0)
@@ -65,7 +74,7 @@ int main(void)
 	  		{
 	  			/* Store the RXed data into a local buffer, then reset our RX buffer - make it atomic */
 	  			char Resp_Buff[RX_BUFF_SIZE];
-	  			char FrameType[2];
+	  			char FrameType[3];
 	  			CORE_AtomicDisableIrq();				//Disable interrupts
 	  			/* Loop and copy elements based on the index */
 	  			for(uint8_t i = 0; i < RX_Index; i++)
@@ -86,6 +95,10 @@ int main(void)
 	  			}
 	  			else
 	  			{
+	  				if(strcmp(Resp_Buff, "OK\r") == 0)
+					{
+	  					waitForResp = false;
+					}
 	  				/*Incoming SMS packet received*/
 	  				if(strcmp(FrameType, "0x9f") == 0)
 	  				{

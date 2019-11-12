@@ -1,6 +1,8 @@
 
 #include "ATCommandsLib.h"
 
+
+
 /*Send an AT command over configured UART*/
 /* "AT" + ASCII Command + Space(Optional) + Parameter (Optional, HEX) + Carriage Return"*/
 /*Omit param to read a field*/
@@ -23,6 +25,10 @@ void XbeeEnterCommandMode()
 {
 	LEUART0_Putchar_n("+++");
 	//Wait one second after this is sent
+	waitForResp = true;
+	timerSetEventInMs(1000);	//wait 1 second
+	while(waitForResp);
+	LOG_INFO("Done");
 }
 
 void XbeeExitCommandMode()
@@ -32,7 +38,6 @@ void XbeeExitCommandMode()
 
 void XbeeSetupSMSSend()
 {
-	XbeeEnterCommandMode();
 	sendATCommandWrite("AP", "0x00");	//API Enable Transparent mode
 	sendATCommandWrite("IP", "0x02");	//Set Xbee to SMS protocol
 

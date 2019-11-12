@@ -10,6 +10,7 @@
 #include "em_cmu.h"
 #include "em_leuart.h"
 #include "em_core.h"
+#include "em_device.h"
 #include "My_Sleep.h"
 #include "Global_Defines.h"
 
@@ -22,11 +23,17 @@ extern uint8_t SchedulerEvent;
 
 void LEUART0_Setup()
 {
+	/* Enable peripheral clocks */
+	CMU_ClockEnable(cmuClock_HFPER, true);
+
+
 	/* Enable needed clocks:
 	 * Select LFXO as a source LFB which goes to LEUART (and wait for it to stabilize) */
 	CMU_ClockSelectSet(cmuClock_LFB, cmuSelect_LFXO);
 	CMU_ClockEnable(cmuClock_LEUART0, true);
 
+	/* Configure GPIO pins */
+	 CMU_ClockEnable(cmuClock_GPIO, true);
 	/* To avoid false start, configure TX output as high */
 	GPIO_PinModeSet(LEUART0_RX_PORT, LEUART0_RX_PIN, gpioModeInput, LEUART0_RX_DEFAULT);			//RX
 	GPIO_PinModeSet(LEUART0_TX_PORT, LEUART0_TX_PIN, gpioModePushPull, LEUART0_TX_DEFAULT);			//TX
@@ -49,24 +56,30 @@ void LEUART0_Setup()
 	LEUART0->ROUTEPEN  = LEUART_ROUTEPEN_TXPEN | LEUART_ROUTEPEN_RXPEN;
 
 	/* Set the START and SIG chars */
-	LEUART0->STARTFRAME = '?';
-	while (LEUART0->SYNCBUSY);
+	//LEUART0->STARTFRAME = 'O';
+	//while (LEUART0->SYNCBUSY);
 
-	LEUART0->SIGFRAME = '#';
+	/*Xbee ends commands responses with carriage return - Sam, 11/10*/
+	LEUART0->SIGFRAME = '\r';
 	while (LEUART0->SYNCBUSY);
 
 	/* Clear TX and RX buffers - Block all incoming frames (only STARTFRAME will pass!) */
-	LEUART0->CMD = LEUART_CMD_CLEARTX | LEUART_CMD_CLEARRX | LEUART_CMD_RXBLOCKEN;
+	LEUART0->CMD = LEUART_CMD_CLEARTX | LEUART_CMD_CLEARRX;// | LEUART_CMD_RXBLOCKEN;
 	while (LEUART0->SYNCBUSY);
 
 	/* Set SFUBRX to allow the START frame character to pass through and clear
 	 * the RXBLOCK */
-	LEUART0->CTRL |= LEUART_CTRL_SFUBRX;
-	while (LEUART0->SYNCBUSY);
+	//LEUART0->CTRL |= LEUART_CTRL_SFUBRX;
+	//while (LEUART0->SYNCBUSY);
 
 	/* Clear and enable interrupts */
-	LEUART0->IFC = LEUART_IFC_TXC | LEUART_IFC_STARTF;
-	LEUART0->IEN = LEUART_IEN_TXC | LEUART_IEN_STARTF;
+	LEUART0->IFC = LEUART_IFC_TXC;// | LEUART_IFC_STARTF;
+	LEUART0->IEN = LEUART_IEN_TXC;// | LEUART_IEN_STARTF;
+
+	//Enable RX interrupt
+	LEUART0->IEN |= LEUART_IEN_RXDATAV;
+	//Enable SIGF
+	LEUART0->IEN |= LEUART_IEN_SIGF;
 
 	/* Enable interrupts from LEUART module */
 	NVIC_EnableIRQ(LEUART0_IRQn);
@@ -126,11 +139,11 @@ void LEUART0_IRQHandler(void)
 	}
 
 	/* STARTF Handler */
-	if(Flags & LEUART_IF_STARTF)
+	/*if(Flags & LEUART_IF_STARTF)
 	{
 		LEUART0->IEN |= LEUART_IEN_RXDATAV;		//Start frame received, start RXing data
 		LEUART0->IEN |= LEUART_IEN_SIGF;		//Enable SIGF
-	}
+	}*/
 
 	/* RXDATAV Handler */
 	if(Flags & LEUART_IF_RXDATAV)

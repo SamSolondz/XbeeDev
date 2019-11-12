@@ -1,4 +1,10 @@
-src/main.o: ../src/main.c \
+src/log.o: ../src/log.c \
+ c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\common\drivers\retargetserial.h \
+ c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\slstk3402a_efm32pg12\config\retargetserialconfig.h \
+ c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\common\bsp\bsp.h \
+ c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\slstk3402a_efm32pg12\config\bspconfig.h \
+ c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\common\bsp\bsp_bcp.h \
+ c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_usart.h \
  c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\device\siliconlabs\efm32pg12b\include\em_device.h \
  c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\device\siliconlabs\efm32pg12b\include\efm32pg12b500f1024gl125.h \
  c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\cmsis\include\core_cm4.h \
@@ -53,26 +59,19 @@ src/main.o: ../src/main.c \
  c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\device\siliconlabs\efm32pg12b\include\efm32pg12b_dmareq.h \
  c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\device\siliconlabs\efm32pg12b\include\efm32pg12b_af_ports.h \
  c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\device\siliconlabs\efm32pg12b\include\efm32pg12b_af_pins.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_chip.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_system.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_gpio.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_bus.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_assert.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_cmu.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_common.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_emu.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_leuart.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_letimer.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_ldma.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\slstk3402a_efm32pg12\config\bspconfig.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\common\bsp\bsp_bcp.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\common\drivers\retargetserial.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\slstk3402a_efm32pg12\config\retargetserialconfig.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\common\bsp\bsp.h \
- c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_usart.h \
- ../src/My_LEUART.h ../src/My_Sleep.h ../src/My_CMU.h \
- ../src/Global_Defines.h ../src/ATCommandsLib.h ../src/log.h \
- ../src/letimer.h
+ ../src/log.h
+
+c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\common\drivers\retargetserial.h:
+
+c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\slstk3402a_efm32pg12\config\retargetserialconfig.h:
+
+c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\common\bsp\bsp.h:
+
+c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\slstk3402a_efm32pg12\config\bspconfig.h:
+
+c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\common\bsp\bsp_bcp.h:
+
+c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_usart.h:
 
 c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\device\siliconlabs\efm32pg12b\include\em_device.h:
 
@@ -182,50 +181,4 @@ c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\
 
 c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\device\siliconlabs\efm32pg12b\include\efm32pg12b_af_pins.h:
 
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_chip.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_system.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_gpio.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_bus.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_assert.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_cmu.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_common.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_emu.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_leuart.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_letimer.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_ldma.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\slstk3402a_efm32pg12\config\bspconfig.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\common\bsp\bsp_bcp.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\common\drivers\retargetserial.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\slstk3402a_efm32pg12\config\retargetserialconfig.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\hardware\kit\common\bsp\bsp.h:
-
-c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_usart.h:
-
-../src/My_LEUART.h:
-
-../src/My_Sleep.h:
-
-../src/My_CMU.h:
-
-../src/Global_Defines.h:
-
-../src/ATCommandsLib.h:
-
 ../src/log.h:
-
-../src/letimer.h:
