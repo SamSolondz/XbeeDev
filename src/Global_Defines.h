@@ -29,9 +29,10 @@
 //Scheduler Defines:
 #define READ_TEMP_EVENT				0b00000001
 #define DECODE_RX_BUFFER			0b00000010
+#define TIMER_UF					0b00000100
 
 //LEUART:
-#define RX_BUFF_SIZE				25
+#define RX_BUFF_SIZE				50
 
 //AT Command Response
 #define AT_COMMAND_PH			(0x4)	//Command reads SIM card phone number

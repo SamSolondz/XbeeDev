@@ -14,6 +14,8 @@ LETIMER_Init_TypeDef letimerInit;
 uint32_t rolloverCount = 0;			//Will break at somepoint when overflows
 int TimerPeriod = 0;
 
+extern volatile uint8_t SchedulerEvent;
+
 typedef struct {
 	int frequency_hz;
 	int divider;
@@ -40,7 +42,7 @@ void LETIMER0_Setup(int TotalPeriod_ms)
 	CMU->LFACLKEN0 |= CMU_LFACLKEN0_LETIMER0;
 
 	/*Enable LETIMER Interrupts*/
-	LETIMER_IntDisable(LETIMER0, LETIMER_IEN_UF);
+	//LETIMER_IntEnable(LETIMER0, LETIMER_IEN_UF);
 	LETIMER_IntDisable(LETIMER0, LETIMER_IEN_COMP1);
 	LETIMER_CompareSet(LETIMER0, 0, LETIMER_VALUE_FROM_MS(TotalPeriod_ms, currentClock.frequency_hz, currentClock.divider));
 
@@ -70,6 +72,7 @@ void LETIMER0_IRQHandler(void)
 
 	if(interruptVal & LETIMER_IFC_UF) //underflow interrupt triggered
 	{
+		//SchedulerEvent |= TIMER_UF;
 		rolloverCount++;
 	}
 

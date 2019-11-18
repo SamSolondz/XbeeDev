@@ -30,8 +30,11 @@
 #include "Global_Defines.h"
 #include "ATCommandsLib.h"
 #include "letimer.h"
-#include "log.h"
+#include "My_Logger.h"
+#include "My_UART.h"
 
+
+#define XBEE_SLEEP_RQ_9		()
 
 /***************************************************************************//**
  * @brief  Main function
@@ -54,69 +57,84 @@ int main(void)
   CMU_Init();
 
   /*Initialize LETIMER*/
-  LETIMER0_Setup(15000); 	//1000 ms underflow period
-
+  LETIMER0_Setup(5000); 	//1000 ms underflow period
   /* Initialize LEUART */
   LEUART0_Setup();
 
   Block_Energy_Mode(SYSTEM_ENERGY_MODE);
 
- XbeeSetupSMSSend();
+
+  Log_Msg_UART_Init();
+  Log_Msg_UART("Main", INFO, "BT logging");
+
+  //XbeeSetupSMSSend("4087661874");
+
+  int flag = 0;
   while (1) {
+	 // Log_Msg_UART("Main", INFO, "BT logging");
+	  /*If we have no events to execute, go to sleep */
+	  if(SchedulerEvent == 0)
+		  Enter_Sleep();
+
+	  //XbeeChangePH("4087661874");
+	  if(SchedulerEvent & TIMER_UF)
+	  {
+		  char snum[20];
+		  int timestamp = loggerGetTimestamp();
+		  // convert 123 to string [buf]
+		  itoa(timestamp, snum, 10);
 
 
-	  /* If we have no events to execute, go to sleep */
-		if(SchedulerEvent == 0)
-			Enter_Sleep();
+		  //LEUART0_Putchar_n(snum);
+		  //LEUART0_Putchar_n("\r");
+
+		  CORE_AtomicDisableIrq();				//Disable interrupts
+		  SchedulerEvent &= ~TIMER_UF;
+		  CORE_AtomicEnableIrq();					//Enable interrupts
+	  }
+
 
 		/*Parse Xbee response in RX Buffer */
-	  		if(SchedulerEvent & DECODE_RX_BUFFER)
-	  		{
-	  			/* Store the RXed data into a local buffer, then reset our RX buffer - make it atomic */
+	  	if(SchedulerEvent & DECODE_RX_BUFFER)
+	  	{
+	  			// Store the RXed data into a local buffer, then reset our RX buffer - make it atomic
 	  			char Resp_Buff[RX_BUFF_SIZE];
-	  			char FrameType[3];
 	  			CORE_AtomicDisableIrq();				//Disable interrupts
-	  			/* Loop and copy elements based on the index */
+	  			// Loop and copy elements based on the index
 	  			for(uint8_t i = 0; i < RX_Index; i++)
 	  			{
 	  				Resp_Buff[i] = RX_Buffer[i];
 	  			}
 	  			Resp_Buff[RX_Index] = '\0';				//End the string
 	  			RX_Index = 0;							//Reset RX index
-
-	  			FrameType[0] = Resp_Buff[0];
-	  			FrameType[1] = Resp_Buff[1];
 	  			CORE_AtomicEnableIrq();					//Enable interrupts
 
-	  			/* Process the RESP string */
+
+
+	  			/*Process the RESP string*/
 	  			if(strcmp(Resp_Buff, "ERROR\r") == 0)
 	  			{
-	  				LOG_INFO("Error: Unsuccessful Xbee Command");
+	  				 Log_Msg_UART("Main", ERROR, "Unsuccessful Xbee Command");
 	  			}
-	  			else
-	  			{
-	  				if(strcmp(Resp_Buff, "OK\r") == 0)
-					{
-	  					waitForResp = false;
-					}
-	  				/*Incoming SMS packet received*/
-	  				if(strcmp(FrameType, "0x9f") == 0)
-	  				{
-	  					//TODO:Write SMS Payload parser
-	  				}
+  				if(strcmp(Resp_Buff, "OK\r") == 0)
+				{
+	  				Log_Msg_UART("Main", INFO, "Xbee: Command OK");
+				}
+  				else	//Parse User SMS Command
+  				{
+  					Log_Msg_UART("Main", INFO, Resp_Buff);
+  				}
 
-	  				if(SchedulerEvent & AT_COMMAND_PH)
-	  				{
-	  					LOG_INFO("Xbee Resp: SIM # = %%s", Resp_Buff);
-	  				}
-	  				//TODO: Process other command requested value from the Xbee
-	  			}
 
-	  			/* Clear the event – making it atomic */
+
+	  			// Clear the event – making it atomic
 	  			CORE_AtomicDisableIrq();				//Disable interrupts
 	  			SchedulerEvent &= ~DECODE_RX_BUFFER;
+	  			LEUART0->CMD = LEUART_CMD_RXBLOCKDIS;		//Stop blocking RX
+	  			while (LEUART0->SYNCBUSY);
 	  			CORE_AtomicEnableIrq();					//Enable interrupts
 	  		}
+
 
 
   }

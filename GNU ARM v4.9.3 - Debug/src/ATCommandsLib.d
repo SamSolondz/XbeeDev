@@ -60,7 +60,9 @@ src/ATCommandsLib.o: ../src/ATCommandsLib.c ../src/ATCommandsLib.h \
  c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_bus.h \
  c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_gpio.h \
  c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_common.h \
- ../src/My_Sleep.h
+ ../src/My_Sleep.h ../src/My_Logger.h ../src/My_UART.h \
+ c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_usart.h \
+ c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_core.h
 
 ../src/ATCommandsLib.h:
 
@@ -191,3 +193,11 @@ c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\
 c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_common.h:
 
 ../src/My_Sleep.h:
+
+../src/My_Logger.h:
+
+../src/My_UART.h:
+
+c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_usart.h:
+
+c:\siliconlabs\simplicitystudio\v4\developer\sdks\gecko_sdk_suite\v2.6\platform\emlib\inc\em_core.h:

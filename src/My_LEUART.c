@@ -149,6 +149,15 @@ void LEUART0_IRQHandler(void)
 	if(Flags & LEUART_IF_RXDATAV)
 	{
 		RX_Buffer[RX_Index] = LEUART0->RXDATA;	//Store received char
+		if(RX_Buffer[RX_Index] == '#')
+		{
+			RX_Buffer[RX_Index] = '\r';
+			//Clear buffers and block RX
+			LEUART0->CMD = LEUART_CMD_RXBLOCKEN | LEUART_CMD_CLEARTX | LEUART_CMD_CLEARRX;
+			while (LEUART0->SYNCBUSY);
+
+			Flags |= LEUART_IF_SIGF;
+		}
 		RX_Index++;								//Increment global buffer index
 
 		/* Error handling:
@@ -163,10 +172,6 @@ void LEUART0_IRQHandler(void)
 	/* SIGF Handler */
 	if(Flags & LEUART_IF_SIGF)
 	{
-		LEUART0->CMD = LEUART_CMD_RXBLOCKEN;
-		while (LEUART0->SYNCBUSY);
-		LEUART0->IEN &= ~LEUART_IEN_RXDATAV;
-		LEUART0->IEN &= ~LEUART_IEN_SIGF;
-		SchedulerEvent |= DECODE_RX_BUFFER;
+		SchedulerEvent |= DECODE_RX_BUFFER;	//Trigger main to decode SMS message in RX_Buffer
 	}
 }
