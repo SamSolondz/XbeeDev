@@ -122,6 +122,7 @@ int main(void)
 				}
   				else	//Parse User SMS Command
   				{
+  					ParseXbeeRx(Resp_Buff);
   					Log_Msg_UART("Main", INFO, Resp_Buff);
   				}
 

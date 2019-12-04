@@ -1,7 +1,7 @@
 
 #include "ATCommandsLib.h"
 
-#define DELIM_CHAR "\r"
+#define TX_DELIM_CHAR "\r"
 
 /*Send an AT command over configured UART*/
 /* "AT" + ASCII Command + Space(Optional) + Parameter (Optional, HEX) + Carriage Return"*/
@@ -12,7 +12,7 @@ int sendATCommandWrite(const char * cmd, const char * param)
 	strcat(command, cmd);
 	if(param != NULL)
 		strcat(command, param);
-	strcat(command, DELIM_CHAR);
+	strcat(command, TX_DELIM_CHAR);
 
 	LOG_INFO("Command sent = %%s\n", command);
 
@@ -43,10 +43,6 @@ void XbeeWait(int waitMs)
 	while(waitForResp);
 }
 
-void XbeeSetSleep()
-{
-	//sendATCommandWrite("SM", );
-}
 
 void XbeeAirplaneMode(bool AirplaneMode)
 {
@@ -58,6 +54,26 @@ void XbeeAirplaneMode(bool AirplaneMode)
 
 void ParseXbeeRx(const char * RxCmd)
 {
+	//
+	char cmd[3];
+	cmd[0] = RxCmd[0];
+	cmd[1] = RxCmd[1];
+	cmd[2] = RxCmd[2];
+
+	if(strcmp(cmd, "RAD") == 0)//Set radius command. Ex RAD3000 (Increase radius by 3000 ft)
+	{
+
+	}
+	if(strcmp(cmd, "LAT") == 0)//Set Latitude command
+	{
+
+	}
+	if(strcmp(cmd, "LON") == 0)//Set Longitude
+	{
+
+	}
+
+
 
 }
 
